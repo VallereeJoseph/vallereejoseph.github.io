@@ -283,9 +283,9 @@ body {
     border-radius: 6px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative; /* Keeps the absolute image contained here */
-    overflow: hidden;   /* Forces the image to inherit the border-radius */
+    /* justify-content: center; */
+    position: relative; 
+    overflow: hidden;   
 }
 
 .avatar-img {
