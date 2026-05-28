@@ -253,7 +253,7 @@ body {
 }
 
 /* ==========================================================================
-   About Section & Profile Component
+   About Section & Responsive Profile Frame
    ========================================================================== */
 .about-grid {
     display: grid;
@@ -283,28 +283,12 @@ body {
     border-radius: 6px;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     position: relative; 
     overflow: hidden;   
 }
 
-.avatar-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;    /* Fills the frame cleanly without stretching */
-    object-position: center;
-    z-index: 2;           /* Sits cleanly on top of the initials background */
-}
-
-.profile-initials {
-    position: relative;
-    z-index: 1;           /* Stays behind the image, acting as a fallback */
-}
-
-/* Creates a subtle graphical pattern inside the placeholder frame */
+/* Subtle background pattern under image fallback */
 .profile-placeholder::before {
     content: '';
     position: absolute;
@@ -314,15 +298,29 @@ body {
                       linear-gradient(90deg, rgba(5, 150, 105, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
     transform: rotate(-15deg);
+    z-index: 0;
+}
+
+/* Keeps avatar perfectly fitted and un-stretched */
+.avatar-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 2;
 }
 
 .profile-initials {
+    position: relative;
     font-size: 3.5rem;
     font-weight: 700;
     color: var(--emerald-light);
-    z-index: 1;
     letter-spacing: -1px;
     opacity: 0.9;
+    z-index: 1;
 }
 
 .about-text p {
@@ -333,6 +331,47 @@ body {
 
 .about-text p:last-child {
     margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Education Layout
+   ========================================================================== */
+.education-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.edu-card {
+    background: var(--bg-white);
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.edu-date {
+    font-size: 0.85rem;
+    color: var(--emerald);
+    font-weight: 600;
+}
+
+.edu-card h3 {
+    font-size: 1.2rem;
+    color: var(--navy-dark);
+    margin: 4px 0;
+}
+
+.edu-institution {
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.edu-loc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
 }
 
 /* ==========================================================================
@@ -381,12 +420,13 @@ body {
 }
 
 /* ==========================================================================
-   Featured Projects
+   Featured Projects (Structured 3-Column Display)
    ========================================================================== */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    align-items: stretch;
 }
 
 .project-card {
@@ -394,6 +434,8 @@ body {
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
     transition: var(--transition);
 }
 
@@ -412,16 +454,36 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    align-self: flex-start;
 }
 
 .project-body {
     padding: 32px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.project-timeline {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--emerald);
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
 .project-body h3 {
     font-size: 1.35rem;
     color: var(--navy-dark);
-    margin-bottom: 12px;
+    margin-bottom: 4px;
+}
+
+.project-location, .work-loc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 16px;
+    font-style: italic;
 }
 
 .project-desc {
@@ -434,6 +496,7 @@ body {
     border-top: 1px solid #f1f5f9;
     padding-top: 16px;
     margin-bottom: 20px;
+    margin-top: auto; /* Pushes meta and tags to bottom of cards evenly */
 }
 
 .project-meta span {
@@ -443,10 +506,35 @@ body {
     margin-bottom: 4px;
 }
 
+.project-meta ul, .work-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0 0;
+}
+
+.project-meta li, .work-bullets li {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.project-meta li::before, .work-bullets li::before {
+    content: "▪";
+    color: var(--emerald);
+    position: absolute;
+    left: 0;
+    top: 0px;
+    font-size: 0.75rem;
+}
+
 .project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    padding-top: 4px;
 }
 
 .project-tags span {
@@ -512,7 +600,7 @@ body {
     padding-left: 24px;
 }
 
-/* Custom indicator nodes on the timeline axis */
+/* Axis point nodes on the timeline timeline */
 .timeline-content::before {
     content: '';
     position: absolute;
@@ -529,13 +617,12 @@ body {
 .timeline-content h5 {
     font-size: 1.1rem;
     color: var(--navy-dark);
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     font-weight: 600;
 }
 
-.timeline-content p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
+.timeline-content p.work-loc {
+    margin-bottom: 8px;
 }
 
 /* ==========================================================================
@@ -598,19 +685,25 @@ body {
 /* ==========================================================================
    Responsive Adaptations (Media Queries)
    ========================================================================== */
+@media (max-width: 1100px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 992px) {
     .hero h1 { font-size: 2.75rem; }
     .about-grid { grid-template-columns: 1fr; gap: 40px; }
     .about-profile { order: -1; }
     .skills-grid { grid-template-columns: repeat(2, 1fr); }
-    .projects-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
-    .nav-links { display: none; } /* Standard implementation step for mobile burger menus */
+    .nav-links { display: none; }
     .hero h1 { font-size: 2.25rem; }
     .metrics-grid { grid-template-columns: 1fr; gap: 20px; }
     .skills-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
     
     .timeline::before { left: 0; }
     .timeline-item { grid-template-columns: 1fr; gap: 8px; }
